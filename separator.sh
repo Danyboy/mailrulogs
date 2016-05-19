@@ -1,9 +1,16 @@
 #!/bin/sh
 
 outdir="./out"
+#mark="event_key="
+#regexp="${mark}[0-9]+"
+
+mark=""
+ipreg="([0-9]{1,3}[\.]){3}[0-9]{1,3}"
+regexp="^${mark}${ipreg}"
 
 separate(){
-    echo "$@" >> "$outdir/$(echo "$@" | grep -Eo -m1 'event_key=[0-9]+' | sed "s|event_key=||g").log"
+    #echo "$@" >> "$outdir/$(echo "$@" | grep -Eo -m1 "${regexp}" | sed "s|"${mark}"||g").log"
+    echo "$@" >> "$outdir/$(echo "$@" | grep -Eo -m1 "${regexp}").log"
 }
 
 read_all(){
