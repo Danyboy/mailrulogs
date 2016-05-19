@@ -18,7 +18,8 @@ read_all(){
     #xargs -n1 -P4 -I myline echo myline >> "$outdir/$(echo myline | grep -Eo -m1 "${regexp}").log"
     #% sh -c 'command1; command2;'
     cd $(dirname "$0")/${outdir}/
-    xargs -n1 -P4 -I file sh -c 'echo "file" >> $(echo "file" | grep -Eo -m1 "^([0-9]{1,3}[\.]){3}[0-9]{1,3}").log'
+    xargs -n1 -P4 -I file sh -c 'echo "file" >> $(echo "file"| cut -c1-15 | grep -Eo -m1 "^([0-9]{1,3}[\.]){3}[0-9]{1,3}").log'
+    #xargs -n1 -P4 -I file sh -c 'echo "file"; echo "file" | cut -c1-15 | grep -Eo -m1 "^([0-9]{1,3}[\.]){3}[0-9]{1,3}"'
     cd -
 }
 
