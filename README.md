@@ -80,10 +80,12 @@ some_text .... event_stop... event_key=2345678 ...some_text...
 
 2. Разработка новой функции активно велась в feature-branch'е на протяжении длительного периода. Регулярно выполнялся merge из trunk'а. Как выявить изменения, внесенные именно в рамках разработки новой функции?
 
-```bash
-svn log URL/branch/path/filename
-```
 
 Как выявить изменения, если merge из trunk'а не выполнялся?
+
+```bash
+svn diff -r revidion_of_branch_creation:HEAD URL/branch/path
+```
+
 
 
