@@ -1,19 +1,18 @@
 #!/bin/sh
 
 outdir="out"
+mark=""
+ipreg="([0-9]{1,3}[\.]){3}[0-9]{1,3}"
+regexp="^${mark}${ipreg}"
 
 separate_ip(){
-    mark=""
-    ipreg="([0-9]{1,3}[\.]){3}[0-9]{1,3}"
-    regexp="^${mark}${ipreg}"
 
     #echo "$@" >> "$outdir/$(echo "$@" | grep -Eo -m1 "${regexp}").log"
-    
-    cd $(dirname "$0")/${outdir}/
-    xargs -n1 -P4 -I file sh -c 'echo "file" >> $(echo "file"| cut -c1-15 | grep -Eo -m1 "([0-9]{1,3}[\.]){3}[0-9]{1,3}").log'
+    #xargs echo >> log
+    #xargs -I file sh -c 'echo "file" >> "$(echo "file"| cut -c1-15 )".log'
+    xargs -n1 -P4 -I file sh -c 'echo "file" >> $(echo "file"| cut -c1-15 | grep -Eo -m1 "^([0-9]{1,3}[\.]){3}[0-9]{1,3}").log'
     #xargs -n1 -P4 -I file sh -c 'echo "file"; echo "file" | cut -c1-15 | grep -Eo -m1 "([0-9]{1,3}[\.]){3}[0-9]{1,3}"'
     #xargs -n1 -P4 -I myline echo myline >> "$outdir/$(echo myline | grep -Eo -m1 "${regexp}").log"
-    cd -
 }
 
 separate_ips(){
@@ -26,7 +25,9 @@ separate_ips(){
 my_test(){
     outdir=${outdir}/"$(date +%H%M)"
     mkdir -p "$outdir"
-    separate_ips
+    cd $(dirname "$0")/${outdir}/
+    separate_ip
+    cd -
 }
 
 my_test
